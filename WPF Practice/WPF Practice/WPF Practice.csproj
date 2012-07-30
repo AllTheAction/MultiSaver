@@ -95,7 +95,6 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="MonitorControls\CommonClasses.cs" />
     <Compile Include="MonitorControls\GroupControl.xaml.cs">
       <DependentUpon>GroupControl.xaml</DependentUpon>
     </Compile>
@@ -134,9 +133,6 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="MonitorControls\Monitor.jpg" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="notes.txt" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\MultiSaver\ConfigPanel\ConfigPanel.csproj">

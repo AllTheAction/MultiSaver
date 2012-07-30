@@ -166,10 +166,6 @@ namespace WPF_Practice.MonitorControls
 
         }
 
-        public void fillBox(Group targetGroup)
-        {
-            nametxtbox.Text = targetGroup.name;
-        }
 
         private void comboScreenSaver_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
