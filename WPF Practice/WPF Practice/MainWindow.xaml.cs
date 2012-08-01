@@ -34,6 +34,8 @@ namespace WPF_Practice
 
             List<string> tmpMonitors = new List<string>();
             InitializeComponent();
+            gcontrol.Visibility = System.Windows.Visibility.Hidden;
+            mainControl.Children.Add(gcontrol);
             
         }
 
@@ -63,7 +65,7 @@ namespace WPF_Practice
             currentScreen = tab.order;
             tab.Background = Brushes.DarkTurquoise;
             
-            this.displayGroupControl(currentScreen);
+            displayGroupControl(currentScreen);
         }
 
         private void DeleteButton_Click(object sender, RoutedEventArgs e)
@@ -143,7 +145,6 @@ namespace WPF_Practice
 
             }
             gcontrol.AvailableMonitors = unassignedMonitors;
-            mainControl.Children.Add(gcontrol);
             currentActiveGroup = selectedScreen;
         }
 

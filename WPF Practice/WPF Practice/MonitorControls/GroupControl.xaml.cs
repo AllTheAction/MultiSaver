@@ -64,7 +64,7 @@ namespace WPF_Practice.MonitorControls
             OwnedScreens = targetStrings;
         }
 
-        private void Load_Page(object sender, RoutedEventArgs e)
+        public void Load_Page()
         {
             nametxtbox.Text = gSetting.groupName;
             if (String.Equals(gSetting.ssType,"SlideShow", StringComparison.InvariantCultureIgnoreCase))
