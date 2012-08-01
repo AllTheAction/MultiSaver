@@ -64,8 +64,36 @@ namespace WPF_Practice.MonitorControls
             OwnedScreens = targetStrings;
         }
 
-        public void Load_Page()
+        public void clear()
         {
+            PendingScreens.Children.Clear();
+            abductedScreens.Children.Clear();
+            panelMonitorSettings.Children.Clear();
+            //nametxtbox.Text = "";
+            combomonitorSelection.Text = "";
+            comboScreenSaver.Text = "";
+            OwnedScreens.Clear();
+            AvailableMonitors.Clear();
+            int monitorcount = 1;
+            foreach (System.Windows.Forms.Screen Screen in System.Windows.Forms.Screen.AllScreens)
+            {
+                string tmpMonitor = "Monitor " + monitorcount;
+                if (!OwnedMonitors.Contains(Screen.DeviceName))
+                {
+                    AvailableMonitors.Add(tmpMonitor);
+                }
+                else
+                {
+                    OwnedMonitors.Add(tmpMonitor);
+                }
+                monitorcount++;
+            }
+
+        }
+        public void Load_Page(GroupSetting gs)
+        {
+            clear();
+            gSetting = gs;
             nametxtbox.Text = gSetting.groupName;
             if (String.Equals(gSetting.ssType,"SlideShow", StringComparison.InvariantCultureIgnoreCase))
                 comboScreenSaver.SelectedIndex = 0;

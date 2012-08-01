@@ -34,7 +34,7 @@ namespace WPF_Practice
 
             List<string> tmpMonitors = new List<string>();
             InitializeComponent();
-            gcontrol.Visibility = System.Windows.Visibility.Hidden;
+           // gcontrol.Visibility = System.Windows.Visibility.Hidden;
             mainControl.Children.Add(gcontrol);
             
         }
@@ -65,7 +65,9 @@ namespace WPF_Practice
             currentScreen = tab.order;
             tab.Background = Brushes.DarkTurquoise;
             
-            displayGroupControl(currentScreen);
+            gcontrol.Visibility = System.Windows.Visibility.Visible;
+            //displayGroupControl(currentScreen);
+            gcontrol.Load_Page(groupsettings[currentScreen]);
         }
 
         private void DeleteButton_Click(object sender, RoutedEventArgs e)
@@ -111,13 +113,6 @@ namespace WPF_Practice
         }
            
 
-        public void reset()
-        {
-
-            if (mainControl.Children.Count != 0)
-                mainControl.Children.RemoveAt(0);
-        }
-
         public int getTotalNumberofGroups()
         {
             return groupsettings.Count;
@@ -125,9 +120,8 @@ namespace WPF_Practice
 
         public void displayGroupControl(int selectedScreen)
         {
+            gcontrol.clear();
             Debug.WriteLine("Selected Screen: {0}", selectedScreen);
-            reset();
-            gcontrol = new GroupControl();
             gcontrol.groupSetting = groupsettings[selectedScreen];
             List<string> unassignedMonitors = new List<string>();
             int monitorcount = 1;
@@ -153,7 +147,33 @@ namespace WPF_Practice
             Debug.WriteLine("Selected Screen: {0}", selectedScreen);
             groupsettings.RemoveAt(selectedScreen);
             ownedmonitors.RemoveAt(selectedScreen);
-            reset();
+            gcontrol.clear();
+        }
+
+        private void btnLoad_Click(object sender, RoutedEventArgs e)
+        {
+            List<GroupSetting> loaded = new List<GroupSetting>();
+            loaded = XMLHandler.load("config.xml");
+            foreach (GroupSetting gs in loaded)
+            {
+                MonitorTab monitor = new MonitorTab();
+                groupsettings.Add(gs);
+                monitor.Width = 383;
+                monitor.Height = 30;
+                monitor.MinWidth = MonitorMenu.MinWidth;
+                monitor.MaxWidth = MonitorMenu.MaxWidth;
+                monitor.MouseDown += Monitor_clicked;
+                monitor.order = groupsettings.Count - 1;
+                currentScreen = groupsettings.Count - 1;
+                monitor.passtitleRef(ref gs.groupName);
+                MonitorMenu.Children.Add(monitor);
+
+                ownedmonitors.Add(new List<string>());
+                foreach (MonitorSetting ms in gs.monitors)
+                {
+                    ownedmonitors[ownedmonitors.Count - 1].Add(ms.monitorId);
+                }
+            }
         }
     }
 }
