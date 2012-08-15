@@ -21,7 +21,8 @@ namespace WPF_Practice
     /// </summary>
     public partial class MainWindow : Window
     {
-        public ScreenSaverControl configScreensSaverControl = new ScreenSaverControl();
+        private ScreenSaverControl configScreensSaverControl;
+        private ScreenSaverListener listener;
         private int currentScreen = -1;
 
         bool firstAppear = true;
@@ -29,8 +30,8 @@ namespace WPF_Practice
         public MainWindow()
         {
             InitializeComponent();
-
-            load("./MultiSaverConfig.xml");
+            configScreensSaverControl = new ScreenSaverControl();
+            listener = new ScreenSaverListener(this, configScreensSaverControl);
         }
 
         public void form_Loaded(object sender, RoutedEventArgs e)
@@ -43,7 +44,7 @@ namespace WPF_Practice
             MonitorTab monitor = new MonitorTab();
 
             monitor.Width = 383;
-            monitor.Height = 30;
+            monitor.Height = 40;
             monitor.MinWidth = MonitorMenu.MinWidth;
             monitor.MaxWidth = MonitorMenu.MaxWidth;
             monitor.MouseDown += Monitor_clicked;
@@ -56,8 +57,7 @@ namespace WPF_Practice
         private void Monitor_clicked(object sender, EventArgs e)
         {
             MonitorTab tab = (MonitorTab)sender;
-            MonitorTab prevtab = (MonitorTab)MonitorMenu.Children[currentScreen];
-            prevtab.title = configScreensSaverControl.getGroupSettings()[currentScreen].groupName;
+
             //resetting the color
             foreach(MonitorTab mt in MonitorMenu.Children)
                 mt.Background = null;
